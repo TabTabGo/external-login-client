@@ -4,11 +4,14 @@ import "./App.css";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import FacebookLogin from "react-facebook-login";
+import MicrosoftLogin from "react-microsoft-login";
 
 const google_clientId =
-  "1053416382660-qfu720eltrjeghqtp5c10ut4aaj3rb4o.apps.googleusercontent.com";
+  "249120057461-j5sqv2vgits01facmte4n0nojctjao4u.apps.googleusercontent.com";
+const microsoft_clientId = "f64fdc1b-61b2-4f1f-9814-00556b41ff3b";
 
 function App() {
+  
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -24,6 +27,10 @@ function App() {
   const onFailure = (err: any) => {
     console.log("failed:", err);
   };
+  const authHandler = (err: any, data: any) => {
+    console.log("MS",err, data);
+  };
+
 
   return (
     <div className="App">
@@ -44,6 +51,7 @@ function App() {
           fields="name,email,picture"
           callback={onSuccess}
         />
+        <MicrosoftLogin clientId={microsoft_clientId} authCallback={authHandler} redirectUri="https://localhost:4200/"/>
       </header>
     </div>
   );
